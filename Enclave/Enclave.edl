@@ -1,0 +1,86 @@
+/* Enclave.edl - Top EDL file. */
+
+enclave {
+    
+    include "user_types.h" /* buffer_t */
+
+    trusted {
+        public void test_function([in,string] const char *str);
+        public int add(int x, int y);
+        public void nothing();
+	
+       	/*Memory management*/
+        public void encl_AllocateMemory(size_t size);
+    	public void encl_AllocateMemory2(size_t size);
+    	public void encl_AllocateMemory3(size_t size);
+    	public void encl_AllocateMemory4(size_t size);
+    	public void encl_AllocateMemory5(size_t size);
+        public void encl_FreeMemory();
+    	public void encl_FreeMemory2();
+    	public void encl_FreeMemory3();
+    	public void encl_FreeMemory4();
+    	public void encl_FreeMemory5();
+	
+	/*numsort*/      	
+    	public void encl_LoadNumArrayWithRand(unsigned long arraysize,unsigned int numarrays);
+        public void encl_NumHeapSort( unsigned long base_offset,unsigned long bottom,unsigned long top);
+    	
+    	//StringSort
+    	public unsigned long encl_LoadStringArray(unsigned int numarrays,unsigned long arraysize);
+    	public void encl_call_StrHeapSort(unsigned long nstrings, unsigned int numarrays, unsigned long arraysize);
+	
+	/*bitsort*/
+	public unsigned long encl_bitSetup(long bitfieldarraysize, long bitoparraysize);
+    	public void encl_ToggleBitRun(unsigned long bit_addr, unsigned long nbits, unsigned int val); 
+    	public void encl_FlipBitRun(long bit_addr,long nbits);         
+    
+        //Floating Point
+        public void encl_SetupCPUEmFloatArrays(unsigned long arraysize);
+        public void encl_DoEmFloatIteration(unsigned long arraysize, unsigned long loops);
+      
+        //Fourier
+        public void encl_DoFPUTransIteration(unsigned long arraysize); 
+
+    	//Assignment
+    	public void encl_LoadAssignArrayWithRand(unsigned long numarrays);
+    	public void encl_call_AssignmentTest(unsigned int numarrays);
+    	
+    	/*IDEA*/
+    	public void encl_app_loadIDEA(unsigned long arraysize);
+    	public void encl_callIDEA(unsigned long arraysize, [in,count=52]unsigned short * Z, [in,count=52]unsigned short * DK, unsigned long nloops);
+
+        /*Neural Net*/
+        public void encl_set_numpats(int npats);
+        public double encl_get_in_pats(int patt, int element);
+        public void encl_set_in_pats(int patt, int element, double val);
+        public void encl_set_out_pats(int patt, int element, double val);
+        public void encl_DoNNetIteration(unsigned long nloops);
+
+        /*LU Decomposition*/
+        public void encl_moveSeedArrays(unsigned long numarrays);
+        public void encl_call_lusolve(unsigned long numarrays);
+        public void encl_build_problem();
+
+	/*Huffman Decomposition*/
+	public void encl_callHuffman(unsigned long nloops, unsigned long arraysize);
+	public void encl_buildHuffman(unsigned long arraysize); 
+
+  };
+
+
+    /* Import ECALL/OCALL from sub-directory EDLs.
+     *  [from]: specifies the location of EDL file. 
+     *  [import]: specifies the functions to import, 
+     *  [*]: implies to import all functions.
+     */
+
+    /* 
+     * ocall_print_string - invokes OCALL to display string buffer inside the enclave.
+     *  [in]: copy the string buffer to App outside.
+     *  [string]: specifies 'str' is a NULL terminated buffer.
+     */
+    untrusted {
+        void ocall_print_string([in, string] const char *str);
+    };
+
+};
