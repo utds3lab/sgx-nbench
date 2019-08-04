@@ -1,0 +1,12 @@
+nbenchPortal/*.out
+*.o
+app
+
+App/Enclave_u.c
+App/Enclave_u.h
+Enclave/Enclave_t.c
+Enclave/Enclave_t.h
+nbenchPortal/pointer
+nbenchPortal/pointer.h
+nbenchPortal/sysinfo.c
+nbenchPortal/sysinfoc.c
