@@ -5,7 +5,7 @@
 #include <pwd.h>
 #define MAX_PATH FILENAME_MAX
 #include "sgx_urts.h"
-#include "sgx_status.h"
+// #include "sgx_status.h"
 #include "App.h"
 #include "Enclave_u.h"
 
